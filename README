@@ -1,0 +1,36 @@
+Design/Implementation
++++++++++++++++++++++
+
+My implementation of this problem uses a Producer-Consumer type design.
+
+First we have our RequestItem.java, this is an Event object that stores the details 
+of an individual person getting the elevator. When the person is created their
+request is added to a Queue. There is a Queue for each floor in our Airport.
+
+Next we have our StoreRequests.java Queue, this stores a Queue of RequestItems in
+a ConcurrentLinkedQueue.
+ 
+The Person.java thread produces a new request item on random intervals. Each person
+has a random starting floor and a random destination floor, they also each have a
+unique id.
+
+The Elevator.java thread has it's own Request queue, it stores what floors the people
+are going to in it. When our elevator is on a floor it empties all the people who want
+to get out at this floor. It then takes any people waiting on this floor.
+
+This stores all output to "output.dat"
+
+
+Problems
+++++++++
+
+There are a few problems with my implementation, they are listed below.
+
+I don't correctly deal with capacity, it's possible for there to be a capacity of 11
+if the first person in the queue on a certain floor has a weight of 2.
+
+My elevator is very naive and simply goes up and down sequentially, it doesn't skip
+any floors and also visits floors without anyone on them.
+
+I don't register the time each person is created or leaves the elevator.
+
